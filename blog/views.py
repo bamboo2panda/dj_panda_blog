@@ -14,7 +14,7 @@ def blog_index(request):
 
 def blog_category(request, category):
     posts = Post.objects.filter(
-        categories_name_contains=category
+        categories__name__contains=category
     ).order_by(
         '-created_on'
     )
@@ -29,7 +29,7 @@ def blog_detail(request, pk):
     post = Post.objects.get(pk=pk)
 
     form = CommentForm()
-    if request.metod == 'POST':
+    if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = Comment(
